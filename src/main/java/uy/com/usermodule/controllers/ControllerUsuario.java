@@ -1,19 +1,21 @@
 package uy.com.usermodule.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uy.com.usermodule.controllers.request.RequestUsuario;
 import uy.com.usermodule.dominio.ILogica;
-import uy.com.usermodule.dominio.respuestas.RespuestaUsuario;
 import uy.com.usermodule.dominio.excepciones.BadRequestException;
 import uy.com.usermodule.dominio.excepciones.InternalServerException;
 import uy.com.usermodule.dominio.excepciones.NotFoundException;
+import uy.com.usermodule.dominio.respuestas.RespuestaUsuario;
 
 @RestController
 @RequestMapping("api/v1/usuario")
 public class ControllerUsuario {
+    @Qualifier("LRU")
     @Autowired
     ILogica logica;
 
@@ -21,7 +23,7 @@ public class ControllerUsuario {
     public ResponseEntity obtener (@PathVariable String idUsuario){ //le indicas que viene por la URL
         RespuestaUsuario ru = null;
         try {
-            ru = logica.obtener(idUsuario);
+            ru = (RespuestaUsuario) logica.obtener(idUsuario);
             return new ResponseEntity<>(ru, HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>( ru, HttpStatus.BAD_REQUEST);

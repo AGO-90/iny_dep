@@ -3,12 +3,13 @@ package uy.com.usermodule.dominio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import uy.com.usermodule.dominio.respuestas.RespuestaUsuario;
+import org.springframework.stereotype.Service;
 import uy.com.usermodule.datos.usuario.IRepositorioUsuario;
+import uy.com.usermodule.dominio.respuestas.RespuestaUsuario;
 
-@Component
-public class Logica implements ILogica {
-    @Qualifier("BD")
+@Service("LRU")
+public class Logica_RespuestaUsuario implements ILogica<RespuestaUsuario> {
+    @Qualifier("UM")
     @Autowired //Lo que esta abajo, va a cargarse automaticamente cuando la aplicacion inicie.
             //Que le va a cargar ?
             // 1. Si lo dejo sin nada: va a buscar la primer clase que encuentre,
@@ -21,7 +22,7 @@ public class Logica implements ILogica {
     //PATCH es para modificar una parte del objeto
 
     public RespuestaUsuario obtener (String idUsuario) throws Exception { // como es GET no necesitamos mandar nada por cuerpo y mandarlo por la URL
-        RespuestaUsuario usu = repositorioUsuario.obtener(idUsuario);
+        RespuestaUsuario usu = (RespuestaUsuario) repositorioUsuario.obtener(idUsuario);
         usu.setToken_nuestro("petero");  // esto es porque puedo ir a otro lado a consultar por el token
         return usu;
     }

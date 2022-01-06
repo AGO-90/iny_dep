@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Repository("UM") // Etiqueta que indica que esta clase puede ser inyectada @Repository @Component @Service
-public class RepositorioUsuario_UserStorage implements IRepositorioUsuario {
+public class RepositorioUsuario_UserStorage implements IRepositorioUsuario<RespuestaUsuario> {
     public RespuestaUsuario obtener(String idUsuario) throws Exception{
         RespuestaUsuario respuestaUsuario = null;
         URL url = new URL("https://users-module-go.herokuapp.com/api/v1/users/disabled/"+idUsuario);
